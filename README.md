@@ -4,7 +4,7 @@ This repository contains our competition source code that won us a 14th place ou
 
 ## Solution overview
 Here is a schematic outlining our solution.
-!(/)
+!(/RSNA_PE_diagram.jpg)
 
 ### Step 1: dividing stratified crossvalidation 
 

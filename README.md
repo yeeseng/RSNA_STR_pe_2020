@@ -13,7 +13,7 @@ The windowing preprocessing step generates a 3 channel dataset that can be conve
 
 Please refer to Kaggle competition website (https://www.kaggle.com/c/rsna-str-pulmonary-embolism-detection/data) for instructions to download the dataset. It is too big to be included in this repository.
 
-### Step 1: 2D CNN classifier
+### Stage 1: 2D CNN classifier
 
 For the stage 1 2D CNN model, we used resnet50 pretrained on imageNet and retrain the model on the competition data preserving the native 512x512 resolution of the CT images. The decision was driven by the fact that based on our experience as radiologists, pulmonary embolisms can be very small and only a few pixels wide, thus neccesitating the high resolution. Our early experiments confirm our hunch. We found that it is better to use a smaller model with native resolutions than to use a larger model but having to downscale the images to meet the memory constraints of the GPU.
 
@@ -24,7 +24,7 @@ Once the stage 1 CNN model is fully trained, the last layer is peeled off so tha
 Run "step01_CNNmodel_02-CV0.ipynb" notebook for a template of our training codes. 
 Run "step02_extractFeatures_02-CV0.ipynb" to convert the trained model to a feature extractor for stage 2.
 
-### Step 2: RNN model
+### Stage 2: RNN model
 
 For stage 2 model, we used bidirectional GRU architecture. We actively tried to prevent overfitting because there are only 7000+ studies. Hence, our input size and hidden states were intentionally small. We chose GRU over other RNN cells like LSTM for the same reason. It did occur to us that we can use larger architectures if we use other techniques to combat overfitting such as dropout layers. However, at the end this is a code competition with compute constraints, so we opt to keep things simple and stick with our smallish RNN models. It turned out to be a good decision when we found that we could add more RNN heads to the same CNN base model and ensemble the results to improve our accuracies.  
 
